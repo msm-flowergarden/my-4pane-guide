@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>私の美容習慣ガイド</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #c9796a;
+    --rose-light: #f2e0db;
+    --rose-pale: #fdf5f3;
+    --gold: #b89a6a;
+    --gold-light: #f5eed8;
+    --navy: #2d3748;
+    --text: #3d3530;
+    --text-light: #7a6e69;
+    --white: #ffffff;
+    --border: #e8d8d0;
+    --active-bg: #c9796a;
+    --pane2-bg: #fdf8f0;
+    --pane3-bg: #f8fdf5;
+    --pane4-bg: #f5f0fd;
+    --shadow: 0 2px 12px rgba(180,120,100,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(135deg, #fdf5f3 0%, #f5eed8 50%, #fdf5f3 100%);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  /* ヘッダー */
+  .header {
+    background: linear-gradient(90deg, #c9796a, #b89a6a);
+    color: white;
+    text-align: center;
+    padding: 18px 20px 14px;
+    box-shadow: 0 2px 10px rgba(180,100,80,0.25);
+  }
+  .header h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .header p {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    margin-top: 3px;
+    letter-spacing: 0.08em;
+  }
+
+  /* メインレイアウト */
+  .main {
+    display: flex;
+    height: calc(100vh - 70px);
+    gap: 0;
+  }
+
+  /* ===== ペイン1: 美容項目メニュー ===== */
+  .pane1 {
+    width: 148px;
+    min-width: 148px;
+    background: white;
+    border-right: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(180,120,100,0.08);
+    overflow-y: auto;
+  }
+  .pane1-label {
+    background: var(--rose-light);
+    color: var(--rose);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding: 8px 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .menu-item {
+    padding: 14px 10px 14px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .menu-item:hover {
+    background: var(--rose-pale);
+    color: var(--rose);
+    padding-left: 18px;
+  }
+  .menu-item.active {
+    background: var(--active-bg);
+    color: white;
+    font-weight: 700;
+    padding-left: 18px;
+    box-shadow: inset 3px 0 0 rgba(255,255,255,0.5);
+  }
+  .menu-item .icon { font-size: 1rem; }
+
+  /* ===== ペイン2〜4 共通 ===== */
+  .pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+  }
+  .pane:last-child { border-right: none; }
+
+  .pane-header {
+    padding: 10px 14px 8px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border-bottom: 2px solid;
+    flex-shrink: 0;
+  }
+  .pane2 .pane-header {
+    background: var(--gold-light);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .pane3 .pane-header {
+    background: #e8f5e0;
+    color: #5a8a3a;
+    border-color: #8aba60;
+    border-bottom-width: 2px;
+  }
+  .pane4 .pane-header {
+    background: #ede8f5;
+    color: #7a5aaa;
+    border-color: #a080cc;
+  }
+
+  .pane-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 14px 20px;
+    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+  .pane2 { background: var(--pane2-bg); }
+  .pane3 { background: var(--pane3-bg); }
+  .pane4 { background: var(--pane4-bg); }
+
+  /* コンテンツスタイル */
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--rose);
+    margin: 14px 0 6px;
+    padding-left: 8px;
+    border-left: 3px solid var(--rose);
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  .urgent-box {
+    background: linear-gradient(135deg, #fff0ee, #ffe8e0);
+    border: 2px solid var(--rose);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+  }
+  .urgent-label {
+    font-weight: 700;
+    color: var(--rose);
+    font-size: 0.82rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .urgent-box p { color: var(--text); line-height: 1.7; }
+
+  .content-block {
+    background: white;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    box-shadow: var(--shadow);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .content-block strong {
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--rose-light);
+    color: var(--rose);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+  .tag-green {
+    background: #e0f0d8;
+    color: #4a7a2a;
+  }
+  .tag-purple {
+    background: #ede0f8;
+    color: #7a4aaa;
+  }
+  .tag-gold {
+    background: var(--gold-light);
+    color: var(--gold);
+  }
+
+  .cheer-box {
+    background: linear-gradient(135deg, #f5f0fd, #ede0f8);
+    border: 1px solid #c0a0e0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 0.84rem;
+    line-height: 1.85;
+    color: #4a3060;
+    font-style: italic;
+  }
+
+  .bullet { padding-left: 14px; }
+  .bullet li {
+    list-style: none;
+    padding: 3px 0;
+    position: relative;
+  }
+  .bullet li::before {
+    content: '◆';
+    color: var(--rose);
+    font-size: 0.5rem;
+    position: absolute;
+    left: -12px;
+    top: 5px;
+  }
+
+  .warning-text {
+    color: #c05020;
+    font-weight: 700;
+    font-size: 0.74rem;
+    background: #fff5ee;
+    border: 1px solid #f0c0a0;
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin: 6px 0;
+  }
+
+  /* 初期画面 */
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-light);
+    text-align: center;
+    padding: 30px;
+  }
+  .welcome .arrow { font-size: 2.5rem; margin-bottom: 12px; }
+  .welcome p { font-size: 0.85rem; line-height: 1.8; }
+
+  /* スクロールバー */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🌸 私の美容習慣ガイド 🌸</h1>
+  <p>左のメニューから項目を選んでください</p>
+</div>
+
+<div class="main">
+
+  <!-- ペイン1: メニュー -->
+  <div class="pane1">
+    <div class="pane1-label">【 美容項目 】</div>
+    <div class="menu-item" onclick="show('skin')" id="menu-skin">
+      <span class="icon">✨</span>肌（スキンケア）
+    </div>
+    <div class="menu-item" onclick="show('hair')" id="menu-hair">
+      <span class="icon">💆</span>髪（ヘアケア）
+    </div>
+    <div class="menu-item" onclick="show('meal')" id="menu-meal">
+      <span class="icon">🥗</span>食事
+    </div>
+    <div class="menu-item" onclick="show('sleep')" id="menu-sleep">
+      <span class="icon">🌙</span>睡眠
+    </div>
+    <div class="menu-item" onclick="show('exercise')" id="menu-exercise">
+      <span class="icon">🏃</span>運動
+    </div>
+    <div class="menu-item" onclick="show('body')" id="menu-body">
+      <span class="icon">🛁</span>体型・ボディケア
+    </div>
+    <div class="menu-item" onclick="show('health')" id="menu-health">
+      <span class="icon">💊</span>健康管理
+    </div>
+    <div class="menu-item" onclick="show('mental')" id="menu-mental">
+      <span class="icon">🌿</span>心の健康・生活習慣
+    </div>
+  </div>
+
+  <!-- ペイン2: 今のあなたに起きていること -->
+  <div class="pane pane2">
+    <div class="pane-header" style="text-align:center;">今のあなたに起きていること</div>
+    <div class="pane-body" id="pane2">
+      <div class="welcome">
+        <div class="arrow">👈</div>
+        <p>左の項目をクリックすると<br>詳細が表示されます</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ペイン3: 毎日のケア -->
+  <div class="pane pane3">
+    <div class="pane-header" style="text-align:center;">毎日のケア＆習慣</div>
+    <div class="pane-body" id="pane3">
+      <div class="welcome">
+        <div class="arrow">👈</div>
+        <p>左の項目をクリックすると<br>詳細が表示されます</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ペイン4: コツ・アドバイス・応援メッセージ -->
+  <div class="pane pane4">
+    <div class="pane-header" style="text-align:center;">続けるコツ・アドバイス＆応援メッセージ</div>
+    <div class="pane-body" id="pane4">
+      <div class="welcome">
+        <div class="arrow">👈</div>
+        <p>左の項目をクリックすると<br>詳細が表示されます</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const data = {
+  skin: {
+    p2: `
+      <div class="section-title">50代の肌に起きていること</div>
+      <div class="content-block">
+        <span class="tag">肌の乾燥</span><br>
+        エストロゲン低下により、肌の水分保持力が落ちています。特に目元・口元のキメの乱れが加速しやすい時期です。
+      </div>
+      <div class="content-block">
+        <span class="tag">シミ・くすみ</span><br>
+        長年の紫外線ダメージが表面化しやすくなっています。今の日焼け止めの使い方が10年後の肌を決めます。
+      </div>
+      <div class="content-block">
+        <span class="tag">夜中のケア習慣</span><br>
+        夜中に目が覚めてパックをしようとするほど、肌と真剣に向き合っているあなた。その意識はとても大切です。ただし、<strong>22〜2時が肌の修復ゴールデンタイム</strong>。夜中のケアより早めの就寝が肌に効きます。
+      </div>
+      <div class="content-block">
+        <span class="tag">パックの残液について</span><br>
+        残液をそのまま塗って寝ると、逆に乾燥することがあります。塗った後は<strong>軽くハンドプレス</strong>して浸透させてから就寝を。
+      </div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p>洗面所に<strong>クレンジングシートを1枚</strong>置いておく。<br>合計<strong>2分でOK</strong>。メイクを落として寝るだけで10年後の目元が変わります。</p>
+      </div>
+      <div class="section-title">【朝のルーティン】推奨</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>日焼け止め（朝1分）← 今日の1分が10年後のシミを決める</li>
+          <li>洗顔 → 化粧水 → 乳液の順で</li>
+          <li>完璧じゃなくていい。日焼け止めだけでも◎</li>
+        </ul>
+      </div>
+      <div class="section-title">【夜のルーティン】推奨</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>クレンジング → 洗顔 → 化粧水 → 乳液</li>
+          <li>パックは週2〜3回で十分</li>
+          <li>パック後はハンドプレスで浸透させてから就寝</li>
+        </ul>
+      </div>
+      <div class="section-title">【月の予算目安】</div>
+      <div class="content-block">
+        今使っているアイテムをベースに、<strong>日焼け止めだけ追加</strong>すれば十分です。高価なアイテムより継続が大切。
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【睡眠タイミングのヒント】</div>
+      <div class="content-block">
+        22〜2時が<strong>肌の修復ゴールデンタイム</strong>。<br>夜中1時に起きてケアするより、寝る前の2分ケアで早めに就寝する方が<strong>小じわに効果的</strong>です。
+      </div>
+      <div class="section-title">【続けるコツ】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>クレンジングシートを洗面所に常備（ハードルを下げる）</li>
+          <li>「完璧なケア」より「毎日できる最小ケア」を優先</li>
+          <li>日焼け止めは朝の習慣に組み込む（歯磨きのついでに）</li>
+        </ul>
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        忙しい毎日の中で、夜中に目が覚めてからでもパックをしようとするあなたは、すでに自分の肌と真剣に向き合っています。完璧じゃなくていい。「メイクを落として寝る」それだけで、10年後の目元が変わります。今日の小さなケアが、未来の自分への贈り物です。
+      </div>
+    `
+  },
+
+  hair: {
+    p2: `
+      <div class="section-title">今の髪に起きていること</div>
+      <div class="content-block">
+        <span class="tag">白髪の進行</span><br>
+        50代に入ると白髪の割合が急増します。染める頻度が増えるとダメージも蓄積しやすくなります。
+      </div>
+      <div class="content-block">
+        <span class="tag">頭皮環境</span><br>
+        現在のシャンプールーティンは<strong>基本的にとても良い</strong>状態です。予洗い・シャンプーブラシの使用・コームでのトリートメント、全て正しい方法です。
+      </div>
+      <div class="content-block">
+        <span class="tag">利尻カラーシャンプーへの切り替え</span><br>
+        白髪染めの代わりに、シャンプーのたびに少しずつ色をつける方法。美容院の間の白髪が気にならなくなります。
+      </div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p>「今日は休み」と決める。それだけでOK。<br>翌朝シャンプーに切り替えれば十分。<br><strong>週4〜5回洗えれば頭皮の健康は保てます。</strong><br>毎日できなくても自分を責めないで。</p>
+      </div>
+      <div class="section-title">【継続中】現在のルーティン ◎</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>予洗い（1分）← これが一番大事</li>
+          <li>シャンプーブラシで地肌を洗う</li>
+          <li>コームでトリートメントを伸ばす</li>
+        </ul>
+        このやり方はそのまま続けてOKです！
+      </div>
+      <div class="section-title">【利尻カラーシャンプー】切り替えスケジュール</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>最初は週3〜4回から。慣れたら毎日使用へ</li>
+          <li>色づきに波があるのは正常。<strong>2週間は継続</strong>してから判断</li>
+          <li>美容院の前日は使用をお休みしても可</li>
+        </ul>
+      </div>
+      <div class="section-title">【月のコスト目安】</div>
+      <div class="content-block">
+        今のシャンプーを利尻カラーシャンプーに切り替えるだけ。<strong>追加コストはほぼゼロ</strong>で白髪ケアができます。
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【利尻カラーシャンプーを長続きさせるコツ】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>最初の2週間は「色がつかない」と感じても続ける</li>
+          <li>週3〜4回から始めて徐々に回数を増やす</li>
+          <li>美容院の前日だけ普通のシャンプーに戻してOK</li>
+        </ul>
+      </div>
+      <div class="section-title">【続けるコツ】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>疲れた日は「今日は休み」と決めてしまう</li>
+          <li>週4〜5回できれば十分と覚えておく</li>
+          <li>翌朝シャンプーに切り替える「ずらし技」を活用</li>
+        </ul>
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        1分の予洗い、シャンプーブラシ、コームでのトリートメント — あなたはすでに「正しいヘアケア」の核心を毎日やっています。利尻カラーシャンプーへの切り替えという一歩を踏み出すだけで、美容院の間の白髪が気にならなくなる日が必ずきます。焦らず、でも諦めずに。あなたの髪は、ちゃんと応えてくれます。
+      </div>
+    `
+  },
+
+  meal: {
+    p2: `
+      <div class="warning-text">⚠️ 最重要前提（1型糖尿病）<br>食事量・炭水化物量・タイミングの変更は、必ず担当ドクターに相談してから行ってください。</div>
+      <div class="section-title">今の食事に起きていること</div>
+      <div class="content-block">
+        <span class="tag">良い点 ◎</span><br>
+        具沢山味噌汁・ゆで卵・納豆・サラダ — すでに<strong>多くの正しいことを当たり前にやっています</strong>。
+      </div>
+      <div class="content-block">
+        <span class="tag">改善ポイント</span><br>
+        食べる順番を意識するだけで<strong>血糖の上がり方が穏やかに</strong>なります。インスリン量を変えずにできる最小の改善です。
+      </div>
+      <div class="content-block">
+        <span class="tag">甘いものとの付き合い方</span><br>
+        「やめよう」と思うとストレスで食べたくなる。<strong>「食べるなら食後に」</strong>だけ決める方が続きます。
+      </div>
+      <div class="content-block">
+        <span class="tag">まごたちわやさしいな</span><br>
+        （豆・ゴマ・わかめ・野菜・魚・しいたけ・いも）<br>あなたの食事はすでに多くの項目をクリアしています！
+      </div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p>1型糖尿病のため、食事を<strong>完全に抜くことは危険</strong>です。<br>どんなに疲れた日でも、以下を守ってください：<br>・何か少しでも食べる（バナナ1本でも可）<br>・血糖値を確認する</p>
+      </div>
+      <div class="section-title">【今日から1つだけ変えるなら】</div>
+      <div class="content-block">
+        <strong>昼食の食べる順番を固定する</strong><br>
+        「味噌汁 → ゆで卵 → おにぎり」の順に。<br>インスリン量も変わらず、コストも手間もゼロで<strong>抗糖化効果</strong>が得られます。
+      </div>
+      <div class="section-title">【間食の選び方ランキング】美容効果順</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>🥇 みかん（ビタミンC・血糖上昇穏やか）</li>
+          <li>🥈 ナッツ類（良質な脂質・抗酸化）</li>
+          <li>🥉 ゆで卵（タンパク質・腹持ち◎）</li>
+          <li>❌ お菓子類（血糖急上昇・美容の敵）</li>
+        </ul>
+        <p style="margin-top:6px; font-size:0.73rem; color:#c05020;">※間食変更もインスリン調整が必要な場合あり。ドクターと確認を。</p>
+      </div>
+      <div class="section-title">【月の食費イメージ】</div>
+      <div class="content-block">
+        今の自炊習慣はそのまま。<strong>追加コストほぼゼロ</strong>で美容食に近づけます。<br>青魚を週2回 / みかんを常備 / ナッツを間食に加えるだけ。
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【一番効果が出やすい変え方】</div>
+      <div class="content-block">
+        食べる順番を変えるだけ。みかんを1個加えるだけ。<br><strong>小さな選択の積み重ね</strong>が、3ヶ月後の肌と体型に現れてきます。
+      </div>
+      <div class="section-title">【甘いものとの上手な付き合い方】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>「やめよう」ではなく「食べるなら食後に」だけ決める</li>
+          <li>みかんを常備 → 自然とお菓子より選びやすくなる</li>
+          <li>完璧主義をやめる。8割できていれば十分</li>
+        </ul>
+      </div>
+      <div class="section-title">【未決事項（ドクターへ確認）】</div>
+      <div class="content-block" style="border-left: 3px solid #f0a040;">
+        <ul class="bullet">
+          <li>夕食時間の前倒し・朝食の副菜追加</li>
+          <li>間食変更によるインスリン調整の必要性</li>
+        </ul>
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        毎日の具沢山味噌汁、ゆで卵、納豆、サラダ — あなたはすでに多くの「正しいこと」を当たり前にやっています。しかも1型糖尿病という毎食ごとのセルフマネジメントをしながら、美しくあろうとしている。それだけで、すでに十分すごいことです。今日の味噌汁を一番先に飲んだ、それだけで十分な一歩です。
+      </div>
+    `
+  },
+
+  sleep: {
+    p2: `
+      <div class="section-title">50代の睡眠に起きていること</div>
+      <div class="content-block">
+        <span class="tag">睡眠の質の低下</span><br>
+        50代はエストロゲン低下により、深い眠りに入りにくくなります。途中で目が覚めやすいのは、体の変化によるものです。
+      </div>
+      <div class="warning-text">⚠️ 1型糖尿病との関係<br>睡眠不足はインスリン感受性を低下させ、血糖コントロールを難しくします。「3時間しか眠れなかった翌日」は血糖が乱れやすいため、ドクターへの相談も視野に。</div>
+      <div class="content-block">
+        <span class="tag">現在の問題の構造</span><br>
+        こたつでPC作業 → 気絶 → 23〜2時に目が覚める → お風呂（体温上昇）→ 就寝 → 6時起床<br>→ <strong>実質睡眠3〜4時間</strong>
+      </div>
+      <div class="content-block">
+        <span class="tag">「食べていないのに太る」との関係</span><br>
+        睡眠不足 → コルチゾール増加 → 脂肪蓄積・食欲増加。<br>食事より先に睡眠を改善するだけで体重管理がしやすくなります。
+      </div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p><strong>「こたつで寝落ち」だけは避けてください。</strong><br>1型糖尿病のため、不規則な睡眠は翌日の血糖管理に直接影響します。<br>家事が終わっていなくても、洗濯物が山積みでも、<strong>布団に入ることを最優先</strong>に。</p>
+      </div>
+      <div class="section-title">【最小変更で最大効果】の睡眠改善</div>
+      <div class="content-block">
+        <strong>1つのルールだけ追加：22時タイマーを設定</strong><br>
+        鳴ったらPCを閉じて布団へ。こたつ生活を全部変える必要はありません。
+      </div>
+      <div class="section-title">【お風呂のタイミング改善】</div>
+      <div class="content-block">
+        入浴は<strong>就寝の90分前</strong>が理想。<br>目標：20〜21時に入浴 → 21時30分〜22時に就寝
+      </div>
+      <div class="section-title">【仮眠の正しい使い方】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>仮眠は<strong>15〜20分まで</strong>（それ以上は深い眠りに入り逆効果）</li>
+          <li>こたつでの仮眠は時間を決めてタイマーをセット</li>
+          <li>午後3時以降の仮眠は夜の睡眠を妨げる</li>
+        </ul>
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【22時タイマーを続けるための工夫】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>スマホに毎日22時のアラームをセット（今夜から）</li>
+          <li>「鳴ったら3分以内にPCを閉じる」ルールにする</li>
+          <li>こたつのタイマー機能を活用（機種確認）</li>
+        </ul>
+      </div>
+      <div class="section-title">【睡眠と美容の関係】</div>
+      <div class="content-block">
+        <strong>一番高価なスキンケアより、22時に布団に入る方が肌に効く。</strong><br>それが睡眠と美容の真実です。
+      </div>
+      <div class="section-title">【未決事項（ドクターへ確認）】</div>
+      <div class="content-block" style="border-left: 3px solid #f0a040;">
+        睡眠不足による血糖コントロールへの影響について担当ドクターへ相談推奨
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        仕事が終わっても家事があって、それでもPC作業をして、毎日全部やろうとしているあなたは、本当にがんばりすぎています。今夜22時にPCを閉じることが、明日のスキンケアよりも、あなたの肌と体と血糖値に一番効きます。洗濯物は明日でいい。家事は明日でいい。22時のアラームが鳴ったら、それが「あなたへの贈り物の合図」です。
+      </div>
+    `
+  },
+
+  exercise: {
+    p2: `
+      <div class="section-title">今の体に起きていること</div>
+      <div class="content-block">
+        <span class="tag">50代の体の変化</span><br>
+        ウエストが増えた、体が硬くなった — それはあなたが悪いのではなく、50代の体が「変化の時期」を正直に教えてくれているサインです。
+      </div>
+      <div class="content-block">
+        <span class="tag">猫背・肩こりの進行</span><br>
+        PC作業・こたつでの前傾姿勢が続くと、肩甲骨周りが固まり猫背が定着します。放置すると首のしわ・二重あごにも影響します。
+      </div>
+      <div class="content-block">
+        <span class="tag">すでにできていること ◎</span><br>
+        毎晩の腕立て15回＋レッグレイズ20回は<strong>すでに立派な筋トレ</strong>。これが大切な土台です。
+      </div>
+      <div class="warning-text">⚠️ 1型糖尿病の安全ルール<br>運動前後にリブレで血糖値を確認。外出運動の日は飴玉・ゼリーを必ずポケットへ。</div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p>① レッグレイズ <strong>10回</strong>（いつもの半分でOK）<br>② 壁に背中をつけて<strong>30秒立つだけ</strong></p>
+      </div>
+      <div class="section-title">【継続中】寝る前の筋トレ</div>
+      <div class="content-block">
+        毎晩の腕立て15回＋レッグレイズ20回はそのまま継続。<strong>これが土台</strong>。
+      </div>
+      <div class="section-title">【追加】猫背・肩こり対策ストレッチ（寝る前3分）</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>肩甲骨を寄せて5秒キープ × 5回</li>
+          <li>首をゆっくり左右に倒す × 各10秒</li>
+          <li>腕を後ろで組んで胸を張る × 10秒</li>
+        </ul>
+      </div>
+      <div class="section-title">【活用】通勤中のながら運動（時間ゼロ・コストゼロ）</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>電車内：かかとの上げ下げ（ふくらはぎ引き締め）</li>
+          <li>電車内：お腹を引っ込めて10秒キープ（ドローイン）</li>
+          <li>階段：エスカレーターより階段を選ぶ</li>
+        </ul>
+      </div>
+      <div class="section-title">【休日】ウォーキング</div>
+      <div class="content-block">
+        以前やっていたので体が覚えています。<strong>週1回15分から</strong>再開するだけでOK。
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【続けるコツ】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>疲れた日は「半分でOK」と決めておく</li>
+          <li>通勤のかかと上げは「誰にもわからない」から続けやすい</li>
+          <li>完璧を目指さない。1回でもやったら勝ち</li>
+        </ul>
+      </div>
+      <div class="section-title">【モチベーション】</div>
+      <div class="content-block">
+        通勤のかかと上げ、電車のドローイン、寝る前の壁立ち30秒 — そのひとつひとつが、<strong>10年後の体型と体力</strong>を作っています。
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        毎晩の腕立てとレッグレイズを続けているあなたは、すでに「動き続けている人」です。ウエストが3cm増えても、体が硬くなっても、それは50代の体が変化しているサイン。あきらめたくないと思っているあなたは、もう続けられる人です。
+      </div>
+    `
+  },
+
+  body: {
+    p2: `
+      <div class="section-title">体型・ボディに起きていること</div>
+      <div class="content-block">
+        <span class="tag">50代の体型変化</span><br>
+        顔が丸くなった、ウエストが増えた — それはあなたが悪いのではなく、50代の体が「変化の時期」を正直に教えてくれているだけです。
+      </div>
+      <div class="content-block">
+        <span class="tag">むくみの蓄積</span><br>
+        長時間の座り仕事・PC作業で、ふくらはぎのポンプ機能が低下。夕方の足のむくみが定着しやすくなっています。
+      </div>
+      <div class="content-block">
+        <span class="tag">すでにできていること ◎</span><br>
+        毎日お風呂上りに全身へ弱酸性ボディミルクを塗っている。<strong>保湿・バリア機能維持として十分</strong>です。
+      </div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p>① ボディミルクを塗りながら<strong>ふくらはぎを足首から膝へ向かって3回さする</strong>だけ（30秒）<br>② 湯船で<strong>足首を10回回す</strong>（座ったままでOK）</p>
+      </div>
+      <div class="section-title">【継続中】お風呂上りのボディミルク ◎</div>
+      <div class="content-block">
+        毎日全身に塗っているのはそのまま継続。<strong>これだけで保湿・バリア機能は十分</strong>です。
+      </div>
+      <div class="section-title">【追加】お風呂上りに1分だけマッサージ</div>
+      <div class="content-block">
+        ボディミルクを塗るついでにそのままできます。<strong>道具不要・コスト0円</strong>。<br>
+        <ul class="bullet">
+          <li>ふくらはぎ：足首から膝へ向かって3回さする</li>
+          <li>太もも：膝から付け根へ向かって3回さする</li>
+          <li>お腹：時計回りにゆっくり3回なでる</li>
+        </ul>
+      </div>
+      <div class="section-title">【入浴中】湯船でできるケア</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>足首を10回ぐるぐる回す</li>
+          <li>足の指をグーパー10回</li>
+          <li>膝を胸に引き寄せて10秒キープ</li>
+        </ul>
+      </div>
+      <div class="section-title">【通勤中】むくみ予防の習慣</div>
+      <div class="content-block">
+        電車内でかかとの上げ下げ → <strong>翌朝のむくみが変わります</strong>
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【続けるコツ】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>「ボディミルクを塗る」という習慣にくっつけるだけ</li>
+          <li>30秒追加するだけ。それだけでむくみが翌朝変わる</li>
+          <li>湯船の時間を「ながらケアタイム」にする</li>
+        </ul>
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        毎日お風呂上りにボディミルクを全身に塗っているあなたは、すでに自分の体を大切にしている人です。顔が丸くなった、ウエストが増えた——でもそれはあなたが悪いわけじゃない。50代の体が「変化の時期」を正直に教えてくれているだけ。今日のふくらはぎの3回さすりが、明日のむくみのない足を作ります。あなたの体は、ちゃんと応えてくれます。
+      </div>
+    `
+  },
+
+  health: {
+    p2: `
+      <div class="section-title">健康管理に関わる状況</div>
+      <div class="content-block">
+        <span class="tag">1型糖尿病のセルフマネジメント</span><br>
+        毎食ごとのインスリン調整・血糖値管理を続けているあなたは、<strong>すでに最高レベルのセルフケア</strong>をしています。
+      </div>
+      <div class="content-block">
+        <span class="tag">リブレの活用</span><br>
+        血糖値をリアルタイムで確認できるリブレは、運動・食事・睡眠の管理に非常に有効です。運動前後の確認を習慣にしましょう。
+      </div>
+      <div class="content-block">
+        <span class="tag">定期通院の重要性</span><br>
+        50代の体の変化（更年期・血圧・栄養状態）を定期的にドクターと確認することが、美容と健康の両方を守ります。
+      </div>
+      <div class="content-block">
+        <span class="tag">人間ドックor 健康診断（年に１回）</span><br>
+        〔定期健診で確認したい項目〕<br>
+        不足しやすい栄養素・更年期の状況・血圧管理。
+      </div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p>血糖値の確認だけは必ず行ってください。<br>特に食事を十分に摂れなかった日・運動をした日は必須です。</p>
+      </div>
+      <div class="section-title">【毎日】血糖管理の習慣</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>起床時・食前・食後2時間・就寝前の確認</li>
+          <li>運動前後は必ずリブレで確認</li>
+          <li>外出時は飴玉・ゼリーをポケットへ</li>
+        </ul>
+      </div>
+      <div class="section-title">【定期通院】確認リスト</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>HbA1c（血糖コントロールの指標）</li>
+          <li>ビタミンD・鉄分（50代に不足しやすい）</li>
+          <li>更年期の状況（エストロゲン値）</li>
+          <li>血圧・コレステロール</li>
+        </ul>
+      </div>
+      <div class="section-title">【人間ドックor 健康診断で伝えること】</div>
+      <div class="content-block">
+        定期通院状況・睡眠の乱れ・体重変化・更年期症状について担当ドクターへ相談を。
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【健康管理を美容につなげるコツ】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>血糖が安定 → 肌荒れ・むくみが減る</li>
+          <li>睡眠が改善 → 血糖コントロールが楽になる</li>
+          <li>適度な運動 → インスリン感受性が上がる</li>
+        </ul>
+        全部つながっています。一つ改善すると他も良くなります。
+      </div>
+      <div class="section-title">【緊急時の備え】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>外出時：ブドウ糖タブレット or 飴玉を必ず携帯</li>
+          <li>職場：低血糖時の対応を同僚に伝えておく</li>
+        </ul>
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        1型糖尿病の管理をしながら、仕事も家事も美容も全力でこなしているあなたは、本当に強い人です。毎食のインスリン調整、毎日の血糖確認 — それだけでもう十分すごいことをやっています。7月のドックを一つのチェックポイントとして、自分の体を労わってあげてください。
+      </div>
+    `
+  },
+
+  mental: {
+    p2: `
+      <div class="section-title">心と生活習慣に起きていること</div>
+      <div class="content-block">
+        <span class="tag">「どうしようどうしよう」ループ</span><br>
+        仕事・家事・1型糖尿病の管理・更年期の変化 — 全部を一人で抱えていれば「どうしよう」となって当然です。あなたが弱いのではなく、<strong>今の荷物が多すぎるだけ</strong>。
+      </div>
+      <div class="content-block">
+        <span class="tag">すでにある充電方法 ◎</span><br>
+        大好きな音楽・散歩の太陽・お風呂の湯船 — これらは全て<strong>医学的に正しいリカバリー法</strong>です。すでに正解を持っています。
+      </div>
+      <div class="content-block">
+        <span class="tag">朝の自己対話</span><br>
+        「まだ寝たい、でも今日もがんばれる」という朝の言葉は、科学的には<strong>「アファメーション」</strong>と呼ばれる最も効果的なメンタル技術です。
+      </div>
+    `,
+    p3: `
+      <div class="urgent-box">
+        <div class="urgent-label">🚨 【疲れた日でもこれだけは！】</div>
+        <p>① 「今日は疲れた」と<strong>声に出すか、夫に一言言う</strong><br>（言語化するだけでコルチゾールが下がる）<br>② 湯船に入る（シャワーだけの日も、最後に<strong>30秒お湯に浸かる</strong>だけでOK）</p>
+      </div>
+      <div class="section-title">【すぐ使える】「どうしようループ」の切り替え法</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>🎵 大好きな音楽を1曲かける（脳のモードが切り替わる）</li>
+          <li>☀️ 窓を開けて30秒外の空気を吸う</li>
+          <li>💬 「気づけた時点で勝ち」と声に出す</li>
+        </ul>
+      </div>
+      <div class="section-title">【朝】アファメーションをさらに活用</div>
+      <div class="content-block">
+        今やっている「まだ寝たい、でも今日もがんばれる」はそのまま続けて。<br>追加するなら：<strong>「今日も自分をほめる」</strong>と一言加えるだけ。
+      </div>
+      <div class="section-title">【継続中の充電法】そのまま続けて</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>大好きな音楽を聴く</li>
+          <li>散歩・太陽を浴びる</li>
+          <li>お風呂の湯船に浸かる</li>
+        </ul>
+        これらは全部、医学的に効果が証明されたリカバリー法です。
+      </div>
+    `,
+    p4: `
+      <div class="section-title">【メンタルと美容のつながり】</div>
+      <div class="content-block">
+        ストレス → コルチゾール増加 → 肌荒れ・むくみ・体重増加<br>
+        心を整えることが、<strong>一番効くアンチエイジング</strong>です。
+      </div>
+      <div class="section-title">【続けるコツ】</div>
+      <div class="content-block">
+        <ul class="bullet">
+          <li>「気づけた時点で勝ち」。完璧にやめなくていい</li>
+          <li>夫への一言は「報告」ではなく「ガス抜き」として使う</li>
+          <li>充電法は「やるべきこと」ではなく「自分へのご褒美」として</li>
+        </ul>
+      </div>
+      <div class="cheer-box">
+        💜 <strong>応援メッセージ</strong><br><br>
+        「今日もがんばれる」と毎朝自分に言い聞かせているあなたは、誰よりも強い人です。仕事も、家事も、1型糖尿病の管理も、更年期の変化も——全部を一人で抱えながら毎日を動いている。「どうしようどうしよう」となる時があって当然です。お風呂の湯船、大好きな音楽、散歩の太陽——あなたにはすでに心を守る「道具」が揃っています。今日も少しだけ、自分を甘やかしてあげてください。それがいちばんのアンチエイジングです。
+      </div>
+    `
+  }
+};
+
+function show(key) {
+  // メニューのアクティブ状態を更新
+  document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('menu-' + key).classList.add('active');
+
+  // コンテンツを更新
+  document.getElementById('pane2').innerHTML = data[key].p2;
+  document.getElementById('pane3').innerHTML = data[key].p3;
+  document.getElementById('pane4').innerHTML = data[key].p4;
+
+  // スクロールをトップに戻す
+  ['pane2','pane3','pane4'].forEach(id => {
+    document.getElementById(id).scrollTop = 0;
+  });
+}
+</script>
+</body>
+</html>
